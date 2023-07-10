@@ -16,5 +16,6 @@ module.exports = {
   },
   rules: {
     // Customize your rules
+    '@typescript-eslint/consistent-type-definitions': 1,
   },
 };

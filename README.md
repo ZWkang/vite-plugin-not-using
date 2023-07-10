@@ -1,28 +1,32 @@
-# pkg-name
+# vite-plugin-not-using
 
-> description:
+> detect the project files not using in the project. (allow output result to file)
 
 ## Features
 
-- tsup The simplest and fastest way to bundle your TypeScript libraries.
-- pnpm awesome package manager
-- Eslint + Prettier good format and format checker
-- TypeScript, of course!!
+- [x] detect the project truly using files with vite
+- [x] allow report the result to file
+- [x] allow ignore some files or just include some files
 
 ## Try it now
 
-## copy usage remove this please !!
+```typescript
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import Plugin from '../../src/index';
 
-a simple description
-
-Inspired by
-
-- [antfu/starter-ts](https://github.com/antfu/starter-ts)
-- [egoist/ts-lib-starter](https://github.com/egoist/ts-lib-starter)
-
-setup a default template to build your own tool, awesome !!
-
-find all pkg-name and replace them all!!
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [
+    vue(),
+    Plugin({
+      root: process.cwd(),
+      include: ['src/**/*'],
+      exclude: ['node_modules/**', 'dist/**'],
+    }),
+  ],
+});
+```
 
 ## LICENSE
 
