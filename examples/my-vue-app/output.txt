@@ -1,0 +1,8 @@
+/Users/zhou/Desktop/code/example/vite-plugin-not-using/examples/my-vue-app/.gitignore
+/Users/zhou/Desktop/code/example/vite-plugin-not-using/examples/my-vue-app/.vscode/extensions.json
+/Users/zhou/Desktop/code/example/vite-plugin-not-using/examples/my-vue-app/README.md
+/Users/zhou/Desktop/code/example/vite-plugin-not-using/examples/my-vue-app/output.txt
+/Users/zhou/Desktop/code/example/vite-plugin-not-using/examples/my-vue-app/package.json
+/Users/zhou/Desktop/code/example/vite-plugin-not-using/examples/my-vue-app/public/vite.svg
+/Users/zhou/Desktop/code/example/vite-plugin-not-using/examples/my-vue-app/src/assets/vue.svg
+/Users/zhou/Desktop/code/example/vite-plugin-not-using/examples/my-vue-app/vite.config.js
