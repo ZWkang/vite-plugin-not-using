@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-not-using",
-  "version": "0.0.1-beta.0",
+  "version": "0.0.1-beta.1",
   "packageManager": "pnpm@7.9.0",
   "description": "> analyze project files and find out which fields are not used",
   "publishConfig": {
