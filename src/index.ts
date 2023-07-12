@@ -14,7 +14,8 @@ interface Options {
   options?: { resolve?: string | false | null },
   output?: WriteFileOptions & {
     file_name: string;
-  }
+  },
+  hideLogDetail?: boolean;
 }
 
 export const queryRE = /\?.*$/s
@@ -31,11 +32,21 @@ const loadAssets = new Set<string>();
 const workSpaceAssets = new Set<string>();
 
 function printList(list: Set<string>, root: string) {
+  console.log(
+    colors.green(`[vite-plugin-not-using]:
+${list.size} files are not used in the project, not using files as follows:`),
+  )
   for (const item of list) {
     console.log(colors.green(
       item.replace(root, '.')
     ))
   }
+}
+
+async function getAFileSize(filePath: string) {
+
+  const result = await fse.stat(filePath);
+  return result.size;
 }
 
 function VitePlugin(opts: Options): Plugin {
@@ -45,7 +56,9 @@ function VitePlugin(opts: Options): Plugin {
     exclude = DEFAULT_EXCLUDE,
     options,
     root,
-    output
+    output,
+    hideLogDetail = false,
+    calculateSizes = false,
   } = opts;
   return {
     name: `vite-plugin-not-using`,
@@ -60,7 +73,29 @@ function VitePlugin(opts: Options): Plugin {
     async closeBundle() {
       await traversalFileTree(root, workSpaceAssets, { include, exclude, options });
       const diff = new Set([...workSpaceAssets].filter(x => !loadAssets.has(x)));
-      printList(diff, root);
+      if (hideLogDetail) {
+        console.log(
+          colors.green(`[vite-plugin-not-using]:
+${diff.size} files are not used in the project`),
+        )
+      } else {
+        printList(diff, root);
+      }
+
+      if (calculateSizes) {
+        let failedCount = 0;
+        const results = await Promise.all([...diff].map((async (item) => {
+          return await getAFileSize(item).catch(() => failedCount++);
+        })))
+        const totalSize = results.reduce((pre, cur) => pre + cur, 0);
+        console.log(
+          colors.green(`[vite-plugin-not-using]:
+total not using files: ${totalSize} bytes, ${totalSize / 1024} KB, ${diff.size} files, ${failedCount} failed count;
+          `)
+        )
+
+
+      }
       loadAssets.clear();
       workSpaceAssets.clear();
 
